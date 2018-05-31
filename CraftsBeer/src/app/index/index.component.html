@@ -1,0 +1,90 @@
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Your Cart</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Id</th>
+                    <th>Abv</th>
+                    <th>Ibu</th>
+                    <th>Style</th>
+                    <th>ounces</th>
+                    <th>Action</th>    
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let b of cartList">
+                    <td>{{b.name}}</td>
+                    <td>{{b.id}}</td>
+                    <td>{{b.abv}}</td>
+                    <td>{{b.ibu}}</td>
+                    <td>{{b.style}}</td>
+                    <td>{{b.ounces}}</td>
+                    <td><i class="fa fa-trash" style="font-size:24px" (click)="removeBeer(b)"></i></td>
+                  </tr>
+                 
+                </tbody>
+              </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">Craft Bear</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <input class="form-control"  id="input" [(ngModel)]="searchText" type="text" placeholder="Search">
+      <i class="fa fa-shopping-bag" style="font-size:36px;" data-toggle="modal" data-target="#myModal"><span class="badge badge-secondary">{{count}}</span></i>
+    </div> 
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div id="beer" *ngFor = "let beer of bearList | paginate: { itemsPerPage: 102, currentPage: p } | filter:searchText" class="col-sm-4">
+        <div class="card ">
+          <div class="card-body text-info">
+            <div class="row">
+              <div class="col-sm-8">
+                  Name : {{beer.name}}
+              </div>
+              <div class="col-sm-4 text-danger">
+                Id : {{beer.id}}
+              </div>
+            </div> <hr>
+            <div class="row">
+                <div class="col-sm-6 text-success">
+                    Abv: {{beer.abv}}
+                </div>
+                <div class="col-sm-6 text-info ">
+                    Ibu : {{beer.ibu}}
+                </div>
+            </div><hr>
+            <div class="row">
+                <div class="col-sm-8">
+                    Style : {{beer.style}}
+                </div>
+                <div class="col-sm-4 text-danger">
+                  Ounces : {{beer.ounces}}
+                </div>
+            </div>   
+          </div>
+          <div class="card-footer"><button class="btn btn-success" (click)="addBeer(beer)">Add</button></div> 
+        </div>
+      </div>
+      <div class="row" style="margin-top:auto">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+  </div>
